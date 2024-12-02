@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Coffee;
+use Illuminate\Support\Facades\Log;
 use App\Http\Requests\CoffeeRequest;
 
 class CoffeeController extends Controller
@@ -11,6 +12,7 @@ class CoffeeController extends Controller
     public function index()
     {
         $coffees = Coffee::all(); // Obtém todos os cafés
+        Log::error('Erro de teste no Laravel!');
         return view('coffees.index', compact('coffees'));
     }
 
@@ -20,18 +22,24 @@ class CoffeeController extends Controller
         return view('coffees.create');
     }
 
-    // Armazena um novo café no banco de dados
     public function store(CoffeeRequest $request)
     {
-        $data = $request->validated(); // Valida os dados usando o CoffeeRequest
+        $data = $request->validated();
 
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('public/coffees'); // Armazena a imagem
+
+            $image = $request->file('image');
+
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+
+            $image->move(public_path('images'), $imageName);
+
+            $data['image'] = 'images/' . $imageName;
         }
 
-        Coffee::create($data); // Cria o café no banco de dados
+        Coffee::create($data);
 
-        return redirect()->route('coffees.index')->with('success', 'Café adicionado com sucesso!');
+        return redirect()->route('coffees.index')->with('success', 'Café cadastrado com sucesso!');
     }
 
     // Exibe o formulário para editar um café existente

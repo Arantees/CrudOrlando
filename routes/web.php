@@ -17,3 +17,6 @@ Route::put('/coffees/{coffee}', [CoffeeController::class, 'update'])->name('coff
 
 Route::delete('/coffees/{coffee}', [CoffeeController::class, 'destroy'])->name('coffees.destroy');
 
+Route::get('/', function () {
+    return view('home');
+})->name('home');
