@@ -32,7 +32,7 @@
     <div class="container text-center mt-5">
         <h1 class="display-4">Bem-vindo ao Coffee Manager</h1>
         <p class="lead">Gerencie seus cafés favoritos com facilidade!</p>
-        <img src="https://source.unsplash.com/600x300/?coffee" alt="Café" class="img-fluid rounded mt-3">
+        <img src={{ asset('images/Coffee.jpg') }} alt="Café" class="img-fluid rounded mt-3">
         <p class="mt-4">
             <a href="{{ route('coffees.create') }}" class="btn btn-primary btn-lg">Cadastrar um Novo Café</a>
         </p>
